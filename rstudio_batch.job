@@ -1,0 +1,11 @@
+#!/bin/bash
+#$ -cwd
+#$ -o rstudio_batch.out.$JOB_ID
+#$ -j y
+#$ -l h_rt=3:00:00,h_data=5G
+#$ -pe shared 1
+
+. /u/local/Modules/default/init/modules.sh
+module load apptainer/1.0.0
+
+apptainer exec $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R

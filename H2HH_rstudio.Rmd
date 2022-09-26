@@ -1,7 +1,7 @@
 ---
 title: "Hoffman2 Happy Hour: Using RStudio on Hoffman2"
 author: "Charles Peterson"
-date: '03-30-2022'
+date: '09-28-2022'
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -54,21 +54,31 @@ cpeterson@oarc.ucla.edu
 
 ## Files for this Presentation
 
-This presentation can be found on github under `HHH_rstudio_03_30_2022` folder
+This presentation can be found on our github page
 
-<https://github.com/ucla/hpc_workshops>
+<https://github.com/ucla-oarc-hpc/H2HH_rstudio>
 
-RStudio files and information for this presentation can be found also on
-github under the `rstudio` folder
+--
 
-<https://github.com/charliecpeterson/H2_software>
+</br>
+
+The html slides can be found at
+
+<https://ucla-oarc-hpc.github.io/H2HH_rstudio>
+
+--
+
+</br>
+
+More information and scripts on using RStudio on Hoffman2
+
+<https://github.com/ucla-oarc-hpc/H2-RStudio>
 
 ---
 
 ## What is RStudio
 
-If you are here, you most likely know what RStudio is and have used it
-before.
+RStudio (soon to be posit) is a great IDE for R and visualize files.
 
 --
 .center[
@@ -78,15 +88,15 @@ But why do you want to use RStudio on Hoffman2 when you can use your own compute
 ]
 --
 .pull-right[
-You may want to use Hoffman2 to access cluster resources, higher memory, multi-core, GPUs.
+You may want to use Hoffman2 to access cluster resources, higher memory, multi-core, GPUs to run R code
 
-You can also access data that is already on Hoffman2.
+You can also access data that is already on Hoffman2 w/o transfering data to your local machine
 ]
 
 --
 
 .center[
-There are two main (free) RStudio IDEs that researchers can use
+There are two main (free) RStudio formats that researchers can use
 ]
 
 --
@@ -103,7 +113,7 @@ This is a standalone desktop application.
 ### RStudio Server
 
 This IDE requires a remote server to run a RStudio Server process that
-you can connect and run on a local web browser
+you can connect and run on a local web browser.
 ]
 
 ---
@@ -122,15 +132,16 @@ connection.
 Hoffman2 has a container that has R/Rstudio that can be ran on with
 Apptainer/Singularity
 
-For more information on using containers, there will be a Workshop [Using
-Containers on HPC
-resources](https://idre.ucla.edu/calendar-event/using-container-on-hpc-resources)
-on Apr 20, 2022
+For more information on using containers, we hosted a workshop on using containers on Hoffman2
+
+<https://github.com/ucla-oarc-hpc/WS_containers>
 
 This container is an isolate image and has its own version of R and RStudio that is unrelated
 to the versions of R that were built on Hoffman2.
 
 <p align = "center"> <img src="rstudio.png" width="20%"> </p> <p align = "center"> rstudio.com</p>
+
+
 
 ---
 
@@ -196,7 +207,9 @@ apptainer run \
  $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif
 ```
 
-At this point, RStudio will start to run on the compute node. You will see information about this RStudio session. You will need to take note of **compute node name** and **port number**. KEEP THIS TERMINAL OPEN.
+At this point, RStudio will start to run on the compute node. You will see information about this RStudio session. You will need to take note of **compute node name** and **port number**. 
+
+**KEEP THIS TERMINAL OPEN**.
 
 This will also display an `ssh -N -L ...` command that you will need to run
 
@@ -211,14 +224,14 @@ RStudio server running on the compute node, to your local computer.
 
 ```{bash, eval = FALSE, echo = TRUE}
 ssh  -L 8787:nXXX:8787 H2USERNAME@hoffman2.idre.ucla.edu 
-# Or whatever command was displayed earlier
+# Or the command was displayed earlier
 ```
 
 Finally, open a web browser
 
 ```{bash, eval = FALSE, echo = TRUE}
 http://localhost:8787
-# Or whatever port number that was displayed
+# Or the port number that was displayed
 ```
 
 ---
@@ -232,8 +245,10 @@ Users can run the `h2_rstudio.sh` script on their **local machine** to
 setup RStudio.
 
 ```{bash, eval = FALSE, echo = TRUE }
-wget https://raw.githubusercontent.com/charliecpeterson/H2_software/master/rstudio/h2_rstudio.sh
+wget https://raw.githubusercontent.com/ucla-oarc-hpc/H2-RStudio/main/h2_rstudio.sh
 ```
+
+--
 
 To display how to use this script:
 
@@ -250,17 +265,21 @@ Typically, you will run this script by providing your Hoffman2 user name
 This will start RStudio by running all the necessary steps and open a
 web browser to the correct port to Hoffman2
 
+--
+
+NOTE: This script has been tested on Mac's terminal app, Windows's WSL and MobaXterm. Will NOT run with GitBash.
+
 ---
 
-# RStudio Script
+## RStudio Script
 
 .center[
 ![](rstudio_script.gif)
 ]
 
-RStudio Script, currently on GitHub under `rstudio` folder
+This RStudio Script is currently on our GitHub page
 
-https://github.com/charliecpeterson/H2_software
+https://github.com/ucla-oarc-hpc/H2-RStudio
 
 ---
 
@@ -270,10 +289,12 @@ This Rstudio container was built using Docker. You can find all containers built
 located at `$H2_CONTAINER_LOC`. The RStudio container used here is named `h2-rstudio_4.1.0.sif`
 
 All **Dockerfiles** where built for Hoffman2 are located at
-<https://github.com/charliecpeterson/containers/tree/master/docker/hoffman>
+<https://github.com/ucla-oarc-hpc/hpc_containers>
 
 This container has its own build of R and when you install packages, it
 will install by default to `~/R/APPTAINER/h2-rstudio_4.1.0`.
+
+--
 
 Let us know if your R packages require extra libraries or software and
 we can update this container **OR** you can modify the RStudio Dockerfile
@@ -281,9 +302,6 @@ and create your own container.
 
 This Dockerfile uses RStudio images from the [Rocker
 Project](https://www.rocker-project.org) as a base. 
-
-I'm currently working on creating custom Rstudio/R images so we can have different
-versions of R and Rstudio.
 
 ---
 
@@ -326,10 +344,13 @@ Create a job script, using the RStudio container, running with apptainer
 #$ -l h_rt=3:00:00,h_data=5G
 #$ -pe shared 1
 
+. /u/local/Modules/default/init/modules.sh
 module load apptainer/1.0.0
 
 apptainer exec $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R
 ```
+
+--
 
 Then run this job script
 
