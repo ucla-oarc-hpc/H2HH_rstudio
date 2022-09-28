@@ -1,4 +1,7 @@
 library(caret)
+library(e1071)
+library(randomForest)
+library(kernlab)
 data(iris)
 
 dataset <- iris

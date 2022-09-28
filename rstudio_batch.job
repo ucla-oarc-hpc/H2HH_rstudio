@@ -8,4 +8,7 @@
 . /u/local/Modules/default/init/modules.sh
 module load apptainer/1.0.0
 
+# EXPORT R Libs directory
+export R_LIBS_USER=$HOME/R/APPTAINER/h2-rstudio_4.1.0
+
 apptainer exec $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R
