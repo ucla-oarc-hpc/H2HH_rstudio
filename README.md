@@ -13,7 +13,7 @@ View this workshop at
 - PDF version 
    - H2HH_rstudio.pdf
 
-- RMarkdown file 
-   - H2HH_rstudio.Rmd
+- Quarto file 
+   - H2HH_rstudio.qmd
 
 

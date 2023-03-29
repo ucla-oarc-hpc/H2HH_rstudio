@@ -142,23 +142,82 @@ There are two main (free) RStudio formats that researchers can use
 
 ### Get An Interactive Job
 
+::: {style="font-size: 0.85em"}
+
 :::: {.columns}
 ::: {.column}
-- Containers cannot run on login nodes. 
-  - You **MUST** use a compute node
+Containers cannot run on login nodes. 
+
+- You **MUST** use a compute node
+  
 :::
 ::: {.column}
 
 <br>
+
 ```{.bash}
 qrsh -l h_data=10G
 ```
+
 :::
 ::::
 
+::: {.fragment}
+
+Modify the qrsh to meet your RStudio computing needs
+
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+
+- More memory and/or job time
+
+:::
+::: {.column}
+
+```{.bash}
+qrsh -l h_data=50G,h_rt=5:00:00
+```
+
+:::
+::::
+:::
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+
+- More cores
+
+:::
+::: {.column}
+
+```{.bash}
+qrsh -l h_data=10G -pe shared 10
+```
+
+:::
+::::
+:::
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+
+- Using GPUs
+
+:::
+::: {.column}
+
+```{.bash}
+qrsh -l h_data=10G,gpu,V100
+```
+
+:::
+::::
+:::
+:::
+:::
 
 ## Running RStudio (2)
-
 
 ### Create Temp Directories
 
@@ -242,7 +301,7 @@ apptainer run \
   - Creates a connection from local computer to compute node
 
 ```{.bash}
-ssh  -L 8787:nXXX:8787 username@hoffman2.idre.ucla.edu 
+ssh  -N -L 8787:nXXX:8787 username@hoffman2.idre.ucla.edu 
 ```
 
 - Change port `8787` if needed
@@ -359,6 +418,8 @@ ls $H2_CONTAINER_LOC/h2-rstudio*sif
 
 ## Information on this RStudio Container (2)
 
+::: { style="font-size: 0.80em" }
+
 -  Separate build of R and 
   - R packages installed in unique directory
     - `~/R/APPTAINER/h2-rstudio_4.1.0` (for h2_rstudio-4.1.0.sif)
@@ -374,6 +435,7 @@ ls $H2_CONTAINER_LOC/h2-rstudio*sif
 - Contact us to update this container 
   - **OR** you can modify the Dockerfile for your own container
   
+:::
 :::
 
 ## Tips for Running RStudio (1)
