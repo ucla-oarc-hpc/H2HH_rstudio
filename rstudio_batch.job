@@ -6,7 +6,7 @@
 #$ -pe shared 1
 
 . /u/local/Modules/default/init/modules.sh
-module load apptainer/1.0.0
+module load apptainer
 
 # EXPORT R Libs directory
 export R_LIBS_USER=$HOME/R/APPTAINER/h2-rstudio_4.1.0
