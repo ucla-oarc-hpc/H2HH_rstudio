@@ -1,0 +1,475 @@
+---
+title: "Using RStudio on Hoffman2"
+subtitle: "Hoffman2 Happy Hour"
+author: "Charles Peterson"
+data: "Mar 29, 2023"
+format: 
+  revealjs: 
+    transition: slide
+    theme: simple
+    scrollable: true
+    self-contained: true
+editor_options: 
+  markdown: 
+    wrap: 72
+from: markdown+emoji
+---
+
+## Hoffman2 Happy Hours
+
+::: {style="font-size: 1.2em"}
+
+:tada: Welcome to the Hoffman2 Happy Hours
+
+::: 
+- Short presentations on topics related to HPC and Hoffman2
+
+:::: {.columns}
+:::: {.column}
+
+- Thoughts for future "Happy Hour" topics? :bulb:
+
+:email: cpeterson@oarc.ucla.edu
+
+:::
+
+:::: {.column}
+
+<p align="center"> <img src="fullpic.png" width="40%"> </p> 
+
+:::
+:::
+
+## Files For This Presentation
+
+This presentation can be found on our github page
+
+<https://github.com/ucla-oarc-hpc/H2HH_rstudio>
+
+<br>
+
+The html slides can be found at
+
+<https://ucla-oarc-hpc.github.io/H2HH_rstudio>
+
+<br>
+
+More information and scripts on using RStudio on Hoffman2
+
+<https://github.com/ucla-oarc-hpc/H2-RStudio>
+
+# RStudio Information
+
+## What Is RStudio
+
+RStudio is a great IDE for R and visualize files.
+
+<p align="center"> <img src="rstudio.png" width="40%"> </p> 
+
+:::: {.columns}
+
+::: {.column style="text-align: center" .fragment}
+<br>
+But why do you want to use RStudio on Hoffman2 when you can use your own computer???
+:::
+
+::: {.column style="font-size: 0.75em" .fragment}
+
+RStudio on Hoffman2 provides access:
+
+- higher memory
+- multi-core
+- GPUs  
+- Your data on Hoffman2 
+
+:::
+::::
+
+## RStudio Formats
+
+There are two main (free) RStudio formats that researchers can use
+
+<br>
+
+:::: {.columns}
+::: {.column .fragment}
+
+### RStudio Desktop
+
+- Standalone desktop application
+
+- Installed locally on your machine
+
+:::
+::: {.column .fragment}
+
+### RStudio Server
+
+- Run RStudio as a server process 
+- Open on a web browser
+
+:::
+::::
+
+## RStudio on Hoffman2
+
+::: { style="font-size: 0.80em" }
+
+**RStudio Desktop** can be inefficient on Hoffman2
+
+- require X11 forwarding 
+- slow 
+- sluggish interaction 
+
+::: {.fragment}
+
+**RStudio Server** is the best way to use RStudio on Hoffman2
+
+- Docker container with R/Rstudio
+  - Ran with Apptainer
+  - [Workshop on using containers on Hoffman2](https://github.com/ucla-oarc-hpc/WS_containers)
+  
+- Isolate container OS image 
+  - Separate version of R that was built on Hoffman2
+
+:::
+:::
+
+# Running RStudio
+
+## Running RStudio (1)
+
+
+### Get An Interactive Job
+
+:::: {.columns}
+::: {.column}
+- Containers cannot run on login nodes. 
+  - You **MUST** use a compute node
+:::
+::: {.column}
+
+<br>
+```{.bash}
+qrsh -l h_data=10G
+```
+:::
+::::
+
+
+## Running RStudio (2)
+
+
+### Create Temp Directories
+
+:::: {.columns}
+::: {.column width="40%"}
+- Create writable temp directories
+  - RStudio writes small files
+  - Anywhere you have write access
+  
+:::
+::: {.column width="60%"}
+<br>
+<br>
+```{.bash}
+mkdir -pv $SCRATCH/rstudiotmp/var/lib
+mkdir -pv $SCRATCH/rstudiotmp/var/run
+mkdir -pv $SCRATCH/rstudiotmp/tmp
+```
+:::
+::::
+
+
+## Running RStudio (3)
+
+### Load the Apptainer Module
+
+:::: {.columns}
+::: {.column}
+- Apptainer is software that will run the Rstudio container
+:::
+::: {.column}
+<br>
+```{.bash}
+module load apptainer
+```
+:::
+::::
+
+RStudio Server on Hoffman2 created from Docker
+
+- Separate R from modules on Hoffman2
+  - DO NOT load R modules
+  - R packages may need to be reinstalled
+  
+## Running RStudio (4)
+
+### Start Up RStudio
+
+```{.bash}
+apptainer run \
+ -B $SCRATCH/rstudiotmp/var/lib:/var/lib/rstudio-server \
+ -B $SCRATCH/rstudiotmp/var/run:/var/run/rstudio-server \
+ -B $SCRATCH/rstudiotmp/tmp:/tmp \
+ $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif
+```
+
+::: { style="font-size: 0.60em" }
+
+- `apptainer run`
+  - Starts the RStudio container
+- `-B $SCRATCH/rstudiotmp/[dir]:[/dir]`
+  - Mounts tmp directories to the container
+- `$H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif`
+  - Location of RStudio container
+  - Can be change to different RStudio versions
+  
+- Information will display about RStudio session
+  - Note the **compute node name** and **port number**. 
+  - Displays `ssh -N -L ...` info to be ran
+
+::: {.callout-note}
+**KEEP THIS TERMINAL OPEN UNTIL YOU JOB IS DONE**
+:::
+:::
+
+## Running RStudio (5)
+
+- Open another terminal on your local computer
+
+- Run the port forward command 
+  - Creates a connection from local computer to compute node
+
+```{.bash}
+ssh  -L 8787:nXXX:8787 username@hoffman2.idre.ucla.edu 
+```
+
+- Change port `8787` if needed
+- `nXXX` is the compute node name
+- `username` is your Hoffman2 username
+
+## Running RStudio (6)
+
+- Finally, open a web browser
+  - Type URL of RStudio Server
+  - Will ALWAYS be localhost
+  - Change port `8787` if needed
+  
+```{.bash}
+http://localhost:8787
+```
+
+## Running Rstudio - The Easy Way
+
+::: { style="font-size: 0.65em" }
+- `h2_rstudio.sh`
+  - Script that runs everything from the previous slide
+  - Starts Rstudio and opens a web browser for you
+  - Runs on your **local computer** (not Hoffman2)
+
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+- Download script
+
+:::
+::: {.column}
+```{.bash }
+wget https://raw.githubusercontent.com/ucla-oarc-hpc/H2-RStudio/main/h2_rstudio.sh
+chmod +x h2_rstudio.sh
+```
+:::
+::::
+:::
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+- To display how to use this script
+
+:::
+::: {.column}
+```{.bash}
+./h2_rstudio.sh -h
+```
+:::
+::::
+:::
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+- Run script 
+  - Replace `username` with Hoffman2 username
+
+:::
+::: {.column}
+```{.bash}
+./h2_rstudio.sh -u username
+```
+:::
+::::
+:::
+::: {.fragment}
+:::: {.columns}
+::: {.column}
+
+::: {.callout-note}
+## h2-studio.sh Information
+Look at our [Github page](https://github.com/ucla-oarc-hpc/H2-RStudio)
+:::
+:::
+::: {.column}
+::: {.callout-caution}
+## Tested Platforms
+:white_check_mark: Mac's terminal app
+
+:white_check_mark: Window's WSL2
+
+:white_check_mark: MoboXterm
+
+:x: GitBash
+:::
+:::
+::::
+:::
+:::
+
+## RStudio Script
+
+:::{ style="text-align: center" }
+![](rstudio_script.gif)
+:::
+
+This RStudio Script is currently on our [GitHub page](https://github.com/ucla-oarc-hpc/H2-RStudio)
+
+## Information on this RStudio Container (1)
+
+- Rstudio container was built using Docker
+  - Based on RStudio images from the [Rocker Project](https://www.rocker-project.org)
+  - Hoffman2 containers located at `$H2_CONTAINER_LOC`
+  - RStudio containers are named `h2-rstudio_X.Y.Z.sif`
+    - Where `X.Y.Z` is the R version
+
+- View all available RStudio containers by running
+
+```{.bash}
+module load apptainer
+ls $H2_CONTAINER_LOC/h2-rstudio*sif
+```
+
+## Information on this RStudio Container (2)
+
+-  Separate build of R and 
+  - R packages installed in unique directory
+    - `~/R/APPTAINER/h2-rstudio_4.1.0` (for h2_rstudio-4.1.0.sif)
+
+- [HPC Container files](https://github.com/ucla-oarc-hpc/hpc_containers)
+  - Docker and definition files for Hoffman2 containers
+  - RStudio Dockerfiles have all you need to build RStudio
+
+::: {.callout-tip}
+## R Package Installs
+
+- Some R packages require extra libraries or software in the container
+- Contact us to update this container 
+  - **OR** you can modify the Dockerfile for your own container
+  
+:::
+
+## Tips for Running RStudio (1)
+
+- If Rstudio does not at start up
+  - Possibly due to previous RStudio not shutdown correctly
+  
+- Clear out any tmp directories config files 
+
+```{.bash}
+rm -rf ~/.config/rstudio
+```
+
+- Clear out RStudio config files
+  
+```{.bash}
+rm -rf $SCRATCH/rstudiotmp
+```
+
+## Tips for Running RStudio (2)
+
+- Access to a Hoffman2 terminal in RStudio
+
+![](rstudio_terminal.gif)
+
+## Using Batch R
+
+- Instead of interactive RStudio, you can run R as a non-interactive batch job
+  - Use R from inside RStudio container as a qsub job
+
+::: {.fragment}
+
+- Create a job script
+  - Load Apptainer
+  - use RStudio container with a .R script
+    - `apptainer exec`
+
+```{.bash}
+#!/bin/bash
+#$ -cwd
+#$ -o rstudio_batch.out.$JOB_ID
+#$ -j y
+#$ -l h_rt=3:00:00,h_data=10G
+#$ -pe shared 1
+
+# Load Apptainer module
+. /u/local/Modules/default/init/modules.sh
+module load apptainer
+
+# Run R with a R script, named myRtest.R
+apptainer exec $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R
+```
+
+:::
+::: {.fragment}
+
+- Then run this job script
+
+```{.bash}
+qsub rstudio_batch.job
+```
+
+:::
+
+## Summary
+
+- Utilize RStudio Server on Hoffman2 
+  - Access through on your web browser
+  - Applicable to other HPC resource as well
+  
+<br>
+
+::: {.fragment}
+
+- RStudio can be used interactively or as a non-interactive batch job
+
+:::
+::: {.fragment}
+
+<br>
+
+- Use the `h2_rstudio.sh` script for easy setup
+
+:::
+
+## Thanks and Happy Computing!
+
+::: { style="font-size: 0.70em" }
+
+Questions? Comments?
+
+- :email: [cpeterson\@oarc.ucla.edu](mailto:cpeterson@oarc.ucla.edu){.email}
+
+- Look at for more [Hoffman2 workshops](https://idre.ucla.edu/calendar) and other OARC workshops
+
+:::{ style="text-align: center" }
+<p align = "center"> <img src="cat.png" width="60%" height="60%"> </p> 
+:::
+:::
