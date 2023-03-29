@@ -406,7 +406,8 @@ This RStudio Script is currently on our [GitHub page](https://github.com/ucla-oa
 - Rstudio container was built using Docker
   - Based on RStudio images from the [Rocker Project](https://www.rocker-project.org)
   - Hoffman2 containers located at `$H2_CONTAINER_LOC`
-  - RStudio containers are named `h2-rstudio_X.Y.Z.sif`
+  - RStudio containers are named: 
+    - `h2-rstudio_X.Y.Z.sif`
     - Where `X.Y.Z` is the R version
 
 - View all available RStudio containers by running
@@ -446,13 +447,13 @@ ls $H2_CONTAINER_LOC/h2-rstudio*sif
 - Clear out any tmp directories config files 
 
 ```{.bash}
-rm -rf ~/.config/rstudio
+rm -rf $SCRATCH/rstudiotmp
 ```
 
 - Clear out RStudio config files
   
 ```{.bash}
-rm -rf $SCRATCH/rstudiotmp
+rm -rf ~/.config/rstudio
 ```
 
 ## Tips for Running RStudio (2)
