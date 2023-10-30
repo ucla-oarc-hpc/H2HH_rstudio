@@ -2,20 +2,16 @@
 title: "Using RStudio on Hoffman2"
 subtitle: "Hoffman2 Happy Hour"
 author: "Charles Peterson"
-data: "Mar 29, 2023"
 format: 
   revealjs: 
     transition: slide
-    theme: simple
+    theme: [custom.scss]
     scrollable: true
     self-contained: true
-editor_options: 
-  markdown: 
-    wrap: 72
 from: markdown+emoji
 ---
 
-## Hoffman2 Happy Hours
+## Welcom to Hoffman2 Happy Hours
 
 ::: {style="font-size: 1.2em"}
 
@@ -266,6 +262,8 @@ RStudio Server on Hoffman2 created from Docker
 
 ### Start Up RStudio
 
+::: { style="font-size: 0.60em" }
+
 ```{.bash}
 apptainer run \
  -B $SCRATCH/rstudiotmp/var/lib:/var/lib/rstudio-server \
@@ -274,7 +272,8 @@ apptainer run \
  $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif
 ```
 
-::: { style="font-size: 0.60em" }
+:::
+::: { style="font-size: 0.50em" }
 
 - `apptainer run`
   - Starts the RStudio container
@@ -321,11 +320,21 @@ http://localhost:8787
 
 ## Running Rstudio - The Easy Way
 
-::: { style="font-size: 0.65em" }
+::: { style="font-size: 0.50em" }
+:::: {.columns}
+::: {.column}
 - `h2_rstudio.sh`
   - Script that runs everything from the previous slide
   - Starts Rstudio and opens a web browser for you
   - Runs on your **local computer** (not Hoffman2)
+:::
+::: {.column}
+::: {.callout-note}
+## h2-studio.sh Information
+Look at our [Github page](https://github.com/ucla-oarc-hpc/H2-RStudio)
+:::
+:::
+::::
 
 ::: {.fragment}
 :::: {.columns}
@@ -372,10 +381,6 @@ chmod +x h2_rstudio.sh
 :::: {.columns}
 ::: {.column}
 
-::: {.callout-note}
-## h2-studio.sh Information
-Look at our [Github page](https://github.com/ucla-oarc-hpc/H2-RStudio)
-:::
 :::
 ::: {.column}
 ::: {.callout-caution}
@@ -401,7 +406,9 @@ Look at our [Github page](https://github.com/ucla-oarc-hpc/H2-RStudio)
 
 This RStudio Script is currently on our [GitHub page](https://github.com/ucla-oarc-hpc/H2-RStudio)
 
-## Information on this RStudio Container (1)
+## Info on this RStudio Container (1)
+
+::: { style="font-size: 0.80em" }
 
 - Rstudio container was built using Docker
   - Based on RStudio images from the [Rocker Project](https://www.rocker-project.org)
@@ -417,7 +424,9 @@ module load apptainer
 ls $H2_CONTAINER_LOC/h2-rstudio*sif
 ```
 
-## Information on this RStudio Container (2)
+:::
+
+## Info on this RStudio Container (2)
 
 ::: { style="font-size: 0.80em" }
 
@@ -506,8 +515,6 @@ qsub rstudio_batch.job
 - Utilize RStudio Server on Hoffman2 
   - Access through on your web browser
   - Applicable to other HPC resource as well
-  
-<br>
 
 ::: {.fragment}
 
@@ -515,8 +522,6 @@ qsub rstudio_batch.job
 
 :::
 ::: {.fragment}
-
-<br>
 
 - Use the `h2_rstudio.sh` script for easy setup
 
@@ -533,6 +538,6 @@ Questions? Comments?
 - Look at for more [Hoffman2 workshops](https://idre.ucla.edu/calendar) and other OARC workshops
 
 :::{ style="text-align: center" }
-<p align = "center"> <img src="cat.png" width="60%" height="60%"> </p> 
+<p align = "center"> <img src="cat.png" width="40%" height="40%"> </p> 
 :::
 :::
