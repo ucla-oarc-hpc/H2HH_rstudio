@@ -11,14 +11,14 @@ format:
 from: markdown+emoji
 ---
 
-## Welcom to Hoffman2 Happy Hours
+## 🎉 Welcome to Hoffman2 Happy Hours
 
 ::: {style="font-size: 1.2em"}
 
 :tada: Welcome to the Hoffman2 Happy Hours
 
 ::: 
-- Short presentations on topics related to HPC and Hoffman2
+- Short presentations on HPC-related topics and practical uses of Hoffman2
 
 :::: {.columns}
 :::: {.column}
@@ -31,34 +31,43 @@ from: markdown+emoji
 
 :::: {.column}
 
-<p align="center"> <img src="fullpic.png" width="40%"> </p> 
+<p align="center"> <img src="fullpic.png" width="35%"> </p> 
 
 :::
 :::
 
-## Files For This Presentation
+## :open_book: Access the Workshop Files
 
-This presentation can be found on our github page
+::: {style="font-size: 0.75em" }
 
-<https://github.com/ucla-oarc-hpc/H2HH_rstudio>
+This presentation and accompanying materials are available on UCLA OARC GitHub Repository :link: [https://github.com/ucla-oarc-hpc](https://github.com/ucla-oarc-hpc)
 
-<br>
+You can view the slides:
 
-The html slides can be found at
+- :page_facing_up: PDF format - WS_HPC-GPU.pdf
+- :globe_with_meridians: HTML Workshop Slides [https://ucla-oarc-hpc.github.io/H2HH_rstudio](https://ucla-oarc-hpc.github.io/H2HH_rstudio)
+- :movie_camera: Recordings can be found on our [BOX account](https://ucla.box.com/s/6fsinqhvsv3ywf9wmg30565iw7l8wvt1)
 
-<https://ucla-oarc-hpc.github.io/H2HH_rstudio>
+:::: {.columns}
+::: {.column width="35%"}
 
-<br>
+Clone the repository for workshop files:
 
-More information and scripts on using RStudio on Hoffman2
+:::
+::: {.column width="65%"}
+```{.bash}
+git clone https://github.com/ucla-oarc-hpc/H2HH_rstudio
+```
 
-<https://github.com/ucla-oarc-hpc/H2-RStudio>
+:::
+::::
+:::
 
 # RStudio Information
 
-## What Is RStudio
+## 🖥️ What is Rstudio
 
-RStudio is a great IDE for R and visualize files.
+A powerful IDE for R, data visualization, and script management
 
 <p align="center"> <img src="rstudio.png" width="40%"> </p> 
 
@@ -71,17 +80,17 @@ But why do you want to use RStudio on Hoffman2 when you can use your own compute
 
 ::: {.column style="font-size: 0.75em" .fragment}
 
-RStudio on Hoffman2 provides access:
+RStudio on Hoffman2 provides access to:
 
-- higher memory
-- multi-core
+- Higher Memory
+- multi-core processing
 - GPUs  
-- Your data on Hoffman2 
+- Your Hoffman2-hosted data
 
 :::
 ::::
 
-## RStudio Formats
+## 🌐  RStudio Formats
 
 There are two main (free) RStudio formats that researchers can use
 
@@ -90,7 +99,7 @@ There are two main (free) RStudio formats that researchers can use
 :::: {.columns}
 ::: {.column .fragment}
 
-### RStudio Desktop
+### 🖥️ RStudio Desktop
 
 - Standalone desktop application
 
@@ -99,15 +108,15 @@ There are two main (free) RStudio formats that researchers can use
 :::
 ::: {.column .fragment}
 
-### RStudio Server
+### 🌐 RStudio Server
 
-- Run RStudio as a server process 
+- Run RStudio as a server process on Hoffman2
 - Open on a web browser
 
 :::
 ::::
 
-## RStudio on Hoffman2
+## 🚀 RStudio on Hoffman2
 
 ::: { style="font-size: 0.80em" }
 
@@ -286,7 +295,9 @@ apptainer run \
 - Information will display about RStudio session
   - Note the **compute node name** and **port number**. 
   - Displays `ssh -N -L ...` info to be ran
-
+  - You will see a Rstudio **Password**
+    - Needed to open Rstudio
+    
 ::: {.callout-note}
 **KEEP THIS TERMINAL OPEN UNTIL YOU JOB IS DONE**
 :::
@@ -481,7 +492,7 @@ rm -rf ~/.config/rstudio
 - Create a job script
   - Load Apptainer
   - use RStudio container with a .R script
-    - `apptainer exec`
+    - `apptainer run`
 
 ```{.bash}
 #!/bin/bash
@@ -496,7 +507,7 @@ rm -rf ~/.config/rstudio
 module load apptainer
 
 # Run R with a R script, named myRtest.R
-apptainer exec $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R
+apptainer run $H2_CONTAINER_LOC/h2-rstudio_4.1.0.sif R CMD BATCH myRtest.R
 ```
 
 :::
@@ -527,7 +538,7 @@ qsub rstudio_batch.job
 
 :::
 
-## Thanks and Happy Computing!
+## 🙏 Thanks and Happy Computing!
 
 ::: { style="font-size: 0.70em" }
 
