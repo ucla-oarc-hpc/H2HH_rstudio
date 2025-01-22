@@ -46,7 +46,7 @@ This presentation and accompanying materials are available on UCLA OARC GitHub R
 
 You can view the slides:
 
-- :page_facing_up: PDF format - WS_H2HH-Rstudio.pdf
+- :page_facing_up: PDF format - H2HH_rstudio.pdf
 - :globe_with_meridians: HTML Workshop Slides [https://ucla-oarc-hpc.github.io/H2HH_rstudio](https://ucla-oarc-hpc.github.io/H2HH_rstudio)
 - :movie_camera: Recordings can be found on our [BOX account](https://ucla.box.com/s/6fsinqhvsv3ywf9wmg30565iw7l8wvt1)
 
